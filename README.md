@@ -6,16 +6,23 @@ The color panel itself uses the platform specific panel, and on iPhone it is pre
 
 ## Usage
 When used with AttributedString bindings;
-```TextColorPicker("Text Color", text: $text, textSelection: $textSelection)```
-```TextColorPicker(text: $text, textSelection: $textSelection) {
+```
+TextColorPicker("Text Color", text: $text, textSelection: $textSelection)
+```
+or
+```
+TextColorPicker(text: $text, textSelection: $textSelection) {
     Text("Pick a color").foregroundStyle(.green)
 }
 ```
 
 When used with a Color binding; 
-```TextColorPicker("Text Color", selection: $color)```
+```
+TextColorPicker("Text Color", selection: $color)
+```
 or
-```TextColorPicker(selection: $color) { 
+```
+TextColorPicker(selection: $color) { 
     Text("Pick a color".foregroundStyle(.green) 
 }
 ```
