@@ -33,11 +33,14 @@ struct ShowColorPicker: ViewModifier {
             content
                 .popover( isPresented: $colorViewModel.colorPickerToggle, arrowEdge: .bottom, content: panel )
                 .presentationCompactAdaptation(.none) // ensure it stays a popover on iPad
+                .task{ print("sizeClass = regular")}
         } else {
             content
                 .sheet(isPresented: $colorViewModel.colorPickerToggle, content: panel )
-                .presentationDetents([.noAlpha, .withAlpha])
+                .presentationDetents([.medium, .large])
+//                .presentationDetents([.noAlpha, .withAlpha])
                 .presentationDragIndicator(.hidden)
+                .task{ print("sizeClass != regular")}
         }
 
 #else
