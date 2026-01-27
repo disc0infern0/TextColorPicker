@@ -13,11 +13,13 @@ struct ShowColorPicker: ViewModifier {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     func panel() -> some View {
-        UIColorPickerPanel(
-            currentCentre: colorViewModel.centerColor.first ?? .primary,
-            submitColorChange: colorViewModel.onReceiveColor,
-            showAlpha: colorViewModel.supportsOpacity
-        )
+        VStack(spacing:0) {
+            UIColorPickerPanel(
+                currentCentre: colorViewModel.centerColor.first ?? .primary,
+                submitColorChange: colorViewModel.onReceiveColor,
+                showAlpha: colorViewModel.supportsOpacity
+            )
+        }
     }
 #endif
     func body(content: Content) -> some View {
