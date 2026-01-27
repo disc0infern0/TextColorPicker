@@ -53,4 +53,27 @@ struct UIColorPickerPanel: UIViewControllerRepresentable {
     }
 }
 
+struct ColorPickerSheetContent: View {
+    let currentCentre: Color
+    let submitColorChange: (Color) -> Void
+    let showAlpha: Bool
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Optional: a small grabber to visually confirm detents
+            Capsule().fill(.secondary.opacity(0.4))
+                .frame(width: 36, height: 5)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
+
+            UIColorPickerPanel(
+                currentCentre: currentCentre,
+                submitColorChange: submitColorChange,
+                showAlpha: showAlpha
+            )
+        }
+        // Avoid .ignoresSafeArea() here
+    }
+}
+
 #endif
