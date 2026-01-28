@@ -19,6 +19,6 @@ import SwiftUI
 /// ```
 
 public struct ColorNameSpace: Sendable {
-    @Namespace var transition
+    @Namespace public var transition
 }
 public let colorNameSpace = ColorNameSpace()
