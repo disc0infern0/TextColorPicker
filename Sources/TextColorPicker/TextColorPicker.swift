@@ -10,9 +10,9 @@ import SwiftUI
 /// LabeledContent will cause the label to be hidden if the view modifier .labelshidden  is used.
 ///
 public struct TextColorPicker<Label: View>: View {
+    @Namespace var colorPickerTransition
     var text: Binding<AttributedString>
     var textSelection: Binding<AttributedTextSelection>
-
     @Environment(\.colorScheme) var colorScheme
 
     // Store either a text key or a custom label closure, not both.

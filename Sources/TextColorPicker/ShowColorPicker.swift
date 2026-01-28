@@ -20,6 +20,9 @@ struct ShowColorPicker: ViewModifier {
         )
         .presentationDetents([.noAlpha, .withAlpha])
         .presentationDragIndicator(.visible)
+        .navigationTransition(
+            .zoom(sourceID: "colorpicker", in: colorNameSpace.transition)
+        )
     }
 #endif
     func body(content: Content) -> some View {
@@ -48,7 +51,6 @@ struct ShowColorPicker: ViewModifier {
 #endif
     }
 }
-
 
 extension View {
     func showColorPicker() -> some View {

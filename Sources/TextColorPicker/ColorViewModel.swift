@@ -15,9 +15,11 @@ extension EnvironmentValues {
     )
 }
 
+
 @Observable
 final class ColorViewModel {
-    var selectedColor: Color = .primary 
+    @ObservationIgnored @Namespace var colorPickerTransition
+    var selectedColor: Color = .primary
     var centerColor: [Color] = [.primary]
     var colorScheme: ColorScheme = .light
     var defaultTextColor: Color { colorScheme == .dark ? .white : .black }
