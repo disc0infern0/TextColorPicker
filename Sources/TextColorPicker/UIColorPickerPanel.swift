@@ -1,6 +1,5 @@
-import SwiftUI
-
 #if os(iOS) || os(iPadOS) || targetEnvironment(macCatalyst)
+import SwiftUI
 import UIKit
 
 /// Fairly standard SwiftUI bridge to the color panel used in UIKit, the UIColorPickerViewController
@@ -50,29 +49,6 @@ struct UIColorPickerPanel: UIViewControllerRepresentable {
             }
         UIColorPickerPanel(currentCentre: .blue, showAlpha: false)
             .presentationDetents([.noAlpha, .withAlpha])
-    }
-}
-
-struct ColorPickerSheetContent: View {
-    let currentCentre: Color
-    let submitColorChange: (Color) -> Void
-    let showAlpha: Bool
-
-    var body: some View {
-        VStack(spacing: 0) {
-            // Optional: a small grabber to visually confirm detents
-            Capsule().fill(.secondary.opacity(0.4))
-                .frame(width: 36, height: 5)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
-
-            UIColorPickerPanel(
-                currentCentre: currentCentre,
-                submitColorChange: submitColorChange,
-                showAlpha: showAlpha
-            )
-        }
-        // Avoid .ignoresSafeArea() here
     }
 }
 

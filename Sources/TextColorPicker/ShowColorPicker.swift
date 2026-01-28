@@ -13,11 +13,12 @@ struct ShowColorPicker: ViewModifier {
 #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     func panel() -> some View {
-        ColorPickerSheetContent(
+        UIColorPickerPanel(
             currentCentre: colorViewModel.centerColor.first ?? .primary,
             submitColorChange: colorViewModel.onReceiveColor,
             showAlpha: colorViewModel.supportsOpacity
         )
+            
     }
 #endif
     func body(content: Content) -> some View {
@@ -38,7 +39,7 @@ struct ShowColorPicker: ViewModifier {
             content
                 .sheet(isPresented: $colorViewModel.colorPickerToggle, content: panel )
                 .presentationDetents([.noAlpha, .withAlpha])
-                .presentationDragIndicator(.hidden)
+                .presentationDragIndicator(.visible)
                 .task{ print("sizeClass != regular")}
         }
 
