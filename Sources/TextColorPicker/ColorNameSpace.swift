@@ -18,7 +18,7 @@ import SwiftUI
 /// .matchedTransitionSource( id: "colorpicker", in: colorNameSpace.transition )
 /// ```
 
-struct ColorNameSpace {
+public struct ColorNameSpace: Sendable {
     @Namespace var transition
 }
-let colorNameSpace = ColorNameSpace()
+public let colorNameSpace = ColorNameSpace()
