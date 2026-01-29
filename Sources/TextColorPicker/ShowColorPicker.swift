@@ -21,7 +21,7 @@ struct ShowColorPicker: ViewModifier {
         .presentationDetents([.noAlpha, .withAlpha])
         .presentationDragIndicator(.visible)
         .navigationTransition(
-            .zoom(sourceID: "colorpicker", in: colorNameSpace.transition)
+            .zoom(sourceID: "colorpicker", in: colorViewModel.namespace)
         )
     }
 #endif

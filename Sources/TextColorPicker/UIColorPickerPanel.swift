@@ -37,6 +37,17 @@ struct UIColorPickerPanel: UIViewControllerRepresentable {
     }
 }
 
+struct ColorPickerPanel: View {
+    let currentCentre: Color
+    let submitColorChange: (Color)->Void = { _ in }
+    let showAlpha: Bool = true
+    let namespace: Namespace.ID
+    
+    var body: some View {
+        UIColorPickerPanel(currentCentre: currentCentre, submitColorChange: submitColorChange, showAlpha: showAlpha)
+            .matchedTransitionSource( id: "colorpicker", in: namespace )
+    }
+}
 #Preview {
     @Previewable @State var text: AttributedString = ""
     @Previewable @State var selection = AttributedTextSelection()

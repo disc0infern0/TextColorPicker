@@ -10,9 +10,9 @@ import SwiftUI
 /// LabeledContent will cause the label to be hidden if the view modifier .labelshidden  is used.
 ///
 public struct TextColorPicker<Label: View>: View {
-    @Namespace var colorPickerTransition
     var text: Binding<AttributedString>
     var textSelection: Binding<AttributedTextSelection>
+    @Namespace var namespace
     @Environment(\.colorScheme) var colorScheme
 
     // Store either a text key or a custom label closure, not both.
@@ -39,14 +39,12 @@ public struct TextColorPicker<Label: View>: View {
         _ titleKey: LocalizedStringKey? = nil,
         text: Binding<AttributedString>,
          textSelection: Binding<AttributedTextSelection>,
-         supportsOpacity: Bool = true
+         supportsOpacity: Bool = true,
     ) where Label == Text {
         self.label = titleKey==nil ? .none : .text(titleKey!)
         self.text = text
         self.textSelection = textSelection
-        _colorViewModel =
-        State( wrappedValue: ColorViewModel(supportsOpacity: supportsOpacity)
-        )
+        _colorViewModel = State( wrappedValue: ColorViewModel(supportsOpacity: supportsOpacity) )
     }
 
     public init(
@@ -58,9 +56,7 @@ public struct TextColorPicker<Label: View>: View {
         self.label = .custom(labelBuilder)
         self.text = text
         self.textSelection = textSelection
-        _colorViewModel =
-        State( wrappedValue: ColorViewModel(supportsOpacity: supportsOpacity)
-        )
+        _colorViewModel = State( wrappedValue: ColorViewModel(supportsOpacity: supportsOpacity) )
     }
     // The two initializers below replicate the stock ColorPicker init options
 
@@ -68,16 +64,12 @@ public struct TextColorPicker<Label: View>: View {
     /// constrains Label to Never so the compiler can infer it
     public init( _ titleKey: LocalizedStringKey? = nil,
           selection: Binding<Color>,
-          supportsOpacity: Bool = true
+          supportsOpacity: Bool = true,
     ) where Label == Never {
         self.text = .constant(AttributedString(""))
         self.textSelection = .constant(AttributedTextSelection())
-
         self.label = titleKey==nil ? .none : .text(titleKey!)
-
-        _colorViewModel = State( wrappedValue: ColorViewModel(
-            selection: selection, supportsOpacity: supportsOpacity)
-        )
+        _colorViewModel = State( wrappedValue: ColorViewModel( selection: selection, supportsOpacity: supportsOpacity) )
     }
 
     /// Initializer for a custom label builder
@@ -95,8 +87,12 @@ public struct TextColorPicker<Label: View>: View {
     public var body: some View {
         ColorPickerIcon(text: text, textSelection: textSelection)
             .environment(\.colorViewModel, colorViewModel)
-            .onAppear { colorViewModel.colorScheme = colorScheme }
+            .onAppear {
+                colorViewModel.colorScheme = colorScheme
+                colorViewModel.namespace = namespace
+            }
             .labeled(with: label.view )
+            .matchedTransitionSource( id: "colorpicker", in: namespace )
     }
     //    var body: some View {
 //        LabeledContent {
@@ -124,18 +120,22 @@ extension View {
 
     @Previewable @State var color = Color.red
 
-    VStack {
-        TextEditor(text: $text, selection: $selection)
-        HStack {
-            TextColorPicker(text: $text, textSelection: $selection) {
-                Text("Pick a color")
+    NavigationStack {
+        VStack(spacing:0) {
+            TextEditor(text: $text, selection: $selection)
+            HStack {
+                TextColorPicker(text: $text, textSelection: $selection) {
+                    Text("Pick a color")
+                }
+                .font(.largeTitle)
+                //            .font(.title)
+                //            .font(.title2)
+                //            .font(.title3)
+                //            .font(.body)
+                .border(.secondary.opacity(0.2))
+                .padding()
+                .navigationTitle(Text("TextColorPicker"))
             }
-            .font(.largeTitle)
-//            .font(.title)
-//            .font(.title2)
-//            .font(.title3)
-//            .font(.body)
-            .border(.secondary.opacity(0.2))
         }
     }
     .task {
@@ -143,5 +143,5 @@ extension View {
         text[text.range(of: "fox")!].foregroundColor = .red
     }
 
-    .frame(width: 300, height: 300)
+//    .frame(width: 300, height: 300)
 }
