@@ -18,7 +18,7 @@ struct ShowColorPicker: ViewModifier {
             submitColorChange: colorViewModel.onReceiveColor,
             showAlpha: colorViewModel.supportsOpacity
         )
-        .presentationDetents([.noAlpha, .withAlpha])
+//        .presentationDetents([.noAlpha, .withAlpha])
         .presentationDragIndicator(.visible)
         .navigationTransition(
             .zoom(sourceID: "colorpicker", in: colorViewModel.namespace)
